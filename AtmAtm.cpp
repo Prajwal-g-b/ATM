@@ -1,6 +1,4 @@
 #include<iostream>
-#include <cwchar>
-#include <windows.h>
 using namespace std;
 class ATM{
     private:
