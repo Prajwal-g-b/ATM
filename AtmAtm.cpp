@@ -3,13 +3,16 @@ using namespace std;
 class ATM{
     private:
             string name;
-            int i=0, j=0,n=0,pin;
+            int i=0, j=0,n=0,pin,cur,pin1,pin2,pin3;
             double accno=0;
-            int a[10] ,t[10];
-
+			int camount=0;
+			int t[20],a[20];
             int amount=0;
-            int total=100;
+            int total=100,ctotal=50;
     public:
+    	 int Pin=123456;
+    	 int Otp = 1234;
+    	 
             void setvalue()
             {
                 cout<<"\n\t                  Enter name:";
@@ -22,56 +25,114 @@ class ATM{
                 {
                     cout<<"\tName:"<<name<<endl;
                     cout<<"\tAccount no:"<<accno<<endl;
-                    cout<<"\tBalance:$"<<total<<endl;
+                    cout<<"\tCurrent account Balance:$"<<ctotal<<endl;
+                    
+                    cout<<"\tSavings account Balance:$"<<total<<endl;
                     
                 }
             void deposit()
                 {
-                     if(accno!=0){
-                     cout<<"\tEnter amount to be Deposited:$";
-                     cin>>amount;
-                     total+=amount;
-                     cout<<"\tAvailable balance is $"<<total<<"\n"<<endl;
-                     t[j]=1;
-                     a[i]=amount;
-                     i++;
-                     j++;
-                     n++;
-                     } else{
-                        cout<<"\tPlease enter your account details"<<endl;
-                     }
+                	
+                     cout<<"\t1.Current account:\n\t2.Savings account\n\tEnter your chouce:";
+                     cin>>cur;
+                     switch(cur)
+					 {
+                     	case 2:
+                     		cout<<"\tEnter amount to be Deposited:$";
+                     		cin>>amount;
+                     		total+=amount;
+                     		cout<<"\tAvailable balance is $"<<total<<"\n"<<endl;
+                     		t[j]=1;
+                     		a[i]=amount;
+                     		i++;
+                     		j++;
+                     		n++;
+                     		break;
+                     case 1:
+                     		cout<<"\tEnter amount to be Deposited:$";
+                     		cin>>camount;
+                     		ctotal+=camount;
+                     		cout<<"\tAvailable balance is $"<<ctotal<<"\n"<<endl;
+                     		t[j]=3;
+                     		a[i]=camount;
+                     		i++;
+                     		j++;
+                     		n++;
+                     
+                     		break;
+                     default:cout<<"\t Invalid Choice\n";
+                    		break;
+                 }
                     
                 }
             void showbal()
                 {
-                    cout<<"\tTotal Balance is: $"<<total<<"\n"<<endl;
+                    cout<<"\tTotal Savings Balance is: $"<<total<<"\n"<<endl;
+                    cout<<"\tTotal Current Balance is: $"<<ctotal<<"\n"<<endl;
                     
                 }
             void withdrawl()
                 {
-                    if(accno!=0){
-                        cout<<"\tEnter amount to be Withdrawn $";
-                        cin>>amount;
-                        if(total<amount||total==0){
-                         cout<<"\tYou dont have enough money";
-                         } else {
+                	cout<<"\t1.Current account:\n\t2.Savings account\n\tEnter your chouce:";
+                     cin>>cur;
+                     switch(cur)
+					 {
+                     	case 2:
+                    
+                    		cout<<"\tEnter amount to be Withdrawn $";
+                        	cin>>amount;
+                        	if(total<amount||total==0)
+							{
+                         		cout<<"\tYou dont have enough money";
+                         	}
+							else
+							{
+                         		cout<<"         Enter your PIN:";
+        						cin>>pin;
+        						if (pin==Pin)
+								{        					
+                         			total=total-amount;
+                         			cout<<"\t Collect your cash..........\n\n";
+                         			cout<<"\t Available balance is $"<<total<<"\n"<<endl;
+                         			t[j]=0;
+                         			a[i]=amount;
+                        			 i++;
+                        			 j++;
+                        			 n++;
+                     			}
+                        		else
+								{
+                        			cout<<"\tInvalid PIN"<<endl;
+                        		}
+                     		} 
+                            break;
+                     case 1:
+                     		if(accno!=0)
+							{
+                        	cout<<"\tEnter amount to be Withdrawn $";
+                        	cin>>camount;
+                        
                          	cout<<"         Enter your PIN:";
         					cin>>pin;
-        					if(pin==123456)
-        					{
-                         total=total-amount;
-                         	cout<<"\t Collect your cash..........\n\n";
-                         cout<<"\t Available balance is $"<<total<<"\n"<<endl;
-                         t[j]=0;
-                         a[i]=amount;
-                         i++;
-                         j++;
-                         n++;
-                        }}
-                     } else{
-                        cout<<"\tInvalid PIN"<<endl;
-                     }
-                    
+        					if (pin==Pin)
+							{
+                         		ctotal=ctotal-camount;
+                         		cout<<"\t Collect your cash..........\n\n";
+                         		cout<<"\t Available balance is $"<<ctotal<<"\n"<<endl;
+                         		t[j]=2;
+                        		a[i]=camount;
+                         		i++;
+                         		j++;
+                        		n++;
+                     		}
+                        	else
+							{
+                        		cout<<"\tInvalid PIN"<<endl;
+                     		}
+                     	 }
+                     	break;
+                     	default:cout<<"\n\tInvalid choice";
+                	}
                 }
                 void miniStatement()
                 {
@@ -84,16 +145,56 @@ class ATM{
                           i=j;
                               if(t[j]==1)
                               {
-                                  cout<<"\tAmount Deposit at "<<i+1<<" is $"<<a[i]<<endl;
-                              } else{
-                                  cout<<"\tAmount Withdrawl at "<<i+1<<" is $"<<a[i]<<endl;
+                                  cout<<"\t"<<i+1<<".Amount Deposit at Savings account is $"<<a[i]<<endl;
+                              }
+							  else if(t[j]==2)
+                              {
+                                  cout<<"\t"<<i+1<<".Amount Withdrawl at Current account is $"<<a[i]<<endl;
+                              }
+							  else if(t[j]==3)
+                              {
+                                  cout<<"\t"<<i+1<<".Amount deposit at Current account is $"<<a[i]<<endl;
+                              }
+							  else if(t[j]==5)
+                              {
+                                  cout<<"\t"<<i+1<<".PIN change"<<endl;
+                              } 
+							  else{
+                                  cout<<"\t"<<i+1<<".Amount Withdrawl at Savings account is $"<<a[i]<<endl;
                               }
                          
                       }
                       i=j;
-                      cout<<"\tAvailable balance is $"<<total<<"\n"<<endl;
+                      cout<<"\tAvailable savings balance is $"<<total<<"\n"<<endl;
+                      cout<<"\tAvailable current balance is $"<<ctotal<<"\n"<<endl;
                   }
                 }
+                void PIN()
+				{
+                	cout<<"\n\tEnter your current pin:";
+                   	cin>>pin1;
+                   	if (pin1==Pin)
+					{
+                   		cout<<"\n\tEnter the new PIN:";
+                   		cin>>pin2;
+                   		cout<<"\n\tEnter the PIN again:";
+                   		cin>>pin3;
+                   		cout<<"\n\tSuccessfully changed your pin";
+                   		
+                   		if(pin3==pin2)
+						{
+                   			Pin=pin3;
+							   t[j]=5;
+							   a[i]=0;
+							   j++;
+							   i++;
+							   n++;                   		
+					   	}
+                   	 }
+				  	 else
+				   	cout<<"\n\tInvalid PIN";
+                	
+				}
             };
 
 int main()
@@ -103,15 +204,32 @@ int main()
 	system("Color 3E");
     ATM b;
     int choice;
-    int count=1,Pin=123456,pin;
+    int count=1,otp,pin,ch;
     while(1)
     {
-    	cout<<"\n\t****************** Welcome to ATM ******************\n";
+    	cout<<"\n\t************** Welcome to OOC Bank ******************\n";
         b.setvalue();
-        cout<<"\n\t                  PIN:";
-        cin>>pin;
+        cout<<"\n\t           1.Card less Transactions:";
+        cout<<"\n\t           1.Card Transactions:";
+        
+        cout<<"\n\t           Enter your choice:";
+        cin>>ch;
+        switch(ch)
+		{
+        	case 1:
+        		cout<<"\n\t           Enter the OTP received on your mobile:";
+        		cin>>otp;
+        		break;
+        	case 2:
+        		cout<<"\n\t            Enter PIN:";
+        		cin>>pin;
+        		break;
+        	default:cout<<"\n\t   Invalid Choice";
+        
+        		break;
+    	}
         do{
-        	if(pin ==Pin)
+        	if(pin == b.Pin||otp==b.Otp)
         	{
         cout<<"\n\t*********************** MENU ***********************\n";
         
@@ -120,9 +238,10 @@ int main()
         cout<<"\t*           3.Withdraw Amount                      *\n";
         cout<<"\t*           4.Show Balance                         *\n";
         cout<<"\t*           5.Recent Transactions                  *\n";
-        cout<<"\t*           6.EXIT                                 *\n";
+        cout<<"\t*           6.Pin Change                           *\n";
+        cout<<"\t*           7.EXIT                                 *\n";
         cout<<"\n\t*****************************************************\n";
-        cout<<"\tEnter your choice";
+        cout<<"\t          Enter your choice:";
         cin>>choice;
         
 		
@@ -144,6 +263,10 @@ int main()
                    b.miniStatement();
                    break;
             case 6:
+                   b.PIN();
+                   
+                   break;
+            case 7:
                    cout<<"\n************Thank you for visiting************\n"<<endl;
                    exit(1);
                    break;
@@ -155,15 +278,25 @@ int main()
     }
     else
     {
-    cout<<"Please enter a valid PIN"<<endl;
-    cin>>pin;
-    count++;
+    	if(ch==1){
+		cout<<"\tPlease enter a valid OTP:";
+    		cin>>otp;
+    		
+		}
+		else
+		{
+    		cout<<"\tPlease enter a valid PIN:";
+    		cin>>pin;
+		}
+    	count++;
+
     }
     
-        
-    }while(count!=3);
+
+}
+	while(count!=3);
     if(count==3)
-    cout<<"Exceed  the limit,Please try later";
+    cout<<"\tExceed  the limit,Please try later";
 	cout<<"\n************Thank you for visiting************\n"<<endl;
                    exit(1);
     
