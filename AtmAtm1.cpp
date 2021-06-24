@@ -1,6 +1,6 @@
 #include<iostream>
-#include<windows.h>
-#include<dos.h>
+#include<windows.h> 		//to add background color
+#include<dos.h>			//to add background color
 using namespace std;
 class ATM{
     private:
@@ -27,7 +27,7 @@ class ATM{
                 void miniStatement()
                 {
                   cout<<"\n\t********************Transactions*******************\n";
-                  if(a[0]!=0)
+                  if(t[0]!=0)
                   {
                     cout<<"\tName: "<<name<<endl;
                     cout<<"\tAccount no: "<<accno<<endl;
